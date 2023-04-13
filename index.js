@@ -26,6 +26,16 @@ class Node {
       };
       printNode(this.root);
     }
+
+    hasChildren() {                                 // Count nodes without any children
+        const countNodes = (node) => {
+          if (!node) return 0;
+          if (!node.left && !node.right) return 1;
+          return countNodes(node.left) + countNodes(node.right);
+        };
+    
+        return countNodes(this.root);
+      }
   }
 
   const root = new Node(5);
@@ -34,3 +44,4 @@ class Node {
   
   const tree = new Tree(root);
   tree.print();
+  console.log("Nodes without children : " + tree.hasChildren())
