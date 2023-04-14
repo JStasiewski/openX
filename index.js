@@ -84,23 +84,22 @@ class Node {
     }
   }
 
-  function compareTrees(tree1, tree2) {
-    const compareNodes = (node1, node2) => {
-      if (node1 === null && node2 === null) {
-        return true;
-      }
-      if (node1 === null || node2 === null) {
-        return false;
-      }
+  function compareTrees(tree1, tree2) {             // Checking if two trees have same values and nodes
+    const areNodesEqual = (node1, node2) => {       // nomater if they are left or right
+      if (!node1 && !node2) return true;
+      if (!node1 || !node2) return false;
       return (
         node1.value === node2.value &&
-        compareNodes(node1.left, node2.left) &&
-        compareNodes(node1.right, node2.right)
+        ((areNodesEqual(node1.left, node2.left) && areNodesEqual(node1.right, node2.right)) ||
+          (areNodesEqual(node1.left, node2.right) && areNodesEqual(node1.right, node2.left)))
       );
     };
   
-    return compareNodes(tree1.root, tree2.root);
-  }  
+    return areNodesEqual(tree1.root, tree2.root);
+  }
+  
+  
+  
   
   const root1 = new Node(5);
   root1.left = new Node(3, new Node(2), new Node(5));
@@ -111,11 +110,12 @@ class Node {
   root2.right = new Node(3, new Node(2), new Node(5));
   
   const tree1 = new Tree(root1);
+  const tree2 = new Tree(root2);
+
   tree1.print();
   tree1.hasChildren();
   tree1.longestNode();
-
-  const tree2 = new Tree(root2);
+  
   tree2.print();
   tree2.hasChildren();
   tree2.longestNode();
